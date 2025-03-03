@@ -17,7 +17,23 @@
         <td>{{user.id}}</td>
         <td>{{user.name}}</td>
         <td>
-          <input type="text" [(ngModel)]="user.admin" class="form-control">
+          <input type="number" [(ngModel)]="user.admin" class="form-control"
+          required min="0" max="2" #adminInput="ngModel">
+
+          @if(adminInput.touched && adminInput.invalid) {
+
+            <div class="alert alert-danger">
+              <p>Érvenytelen</p>
+            </div>
+          }
+
+          @if(adminInput.hasError('min') || adminInput.hasError('max')) {
+
+            <div class="alert alert-danger">
+              <p>0, 1 vagy 2</p>
+            </div>
+          }
+
         </td>
         
         <td>
