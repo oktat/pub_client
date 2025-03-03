@@ -1,0 +1,50 @@
+<h1>Belépés</h1>
+
+<form [formGroup]="loginForm" (ngSubmit)="login()">
+
+  <div class="form-group">
+    <label for="name">Név</label>
+    <input type="text" class="form-control" formControlName="name">
+    
+    @if(
+      loginForm.controls['name'].hasError('required') &&
+      loginForm.controls['name'].touched
+    ) {
+      <small class="text-danger">Kötelező</small>
+    }
+
+    @if(
+      loginForm.controls['name'].hasError('minlength') &&
+      loginForm.controls['name'].touched
+    ) {
+      <small class="text-danger">Minimum 3 karakter</small>
+    }
+
+  </div>
+  <div class="form-group">
+    <label for="password">Jelszó</label>
+    <input type="password" class="form-control" formControlName="password">
+
+    @if(
+      loginForm.controls['password'].hasError('required') &&
+      loginForm.controls['password'].touched
+    ) {
+      <small class="text-danger">Kötelező</small>
+    }
+
+    @if(
+      loginForm.controls['password'].hasError('minlength') &&
+      loginForm.controls['password'].touched
+    ) {
+      <small class="text-danger">Minimum 5 karakter</small>
+    }
+
+  </div>
+
+
+
+  <button type="submit" class="btn btn-primary mt-3">Bejelentkezés</button>
+</form>
+
+
+

@@ -1,0 +1,89 @@
+<h1>Kiszerelés</h1>
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Hozzáad
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          @if(addMode) {
+            Új kiszerelés
+          }@else {
+            Módosítás
+          }
+        </h1>
+        <button type="button" class="btn-close" 
+        data-bs-dismiss="modal" aria-label="Close"
+        (click)="closeButton()"></button>
+      </div>
+      <div class="modal-body">
+
+
+
+        <form [formGroup]="packageForm" (ngSubmit)="savePackage()"
+        id="packageForm">
+          <div class="input">
+            <label for="id">Id</label>
+            <input type="text" class="form-control" formControlName="id"
+              readonly>
+          </div>
+          <div class="input">
+            <label for="package">Kiszerelés</label>
+            <input type="text" class="form-control" formControlName="package">
+          </div>
+
+        </form>
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" 
+        data-bs-dismiss="modal"
+        (click)="closeButton()"
+        >Bezár</button>
+        <button type="submit" class="btn btn-primary"
+        data-bs-dismiss="modal"
+        form="packageForm">
+          Mentés
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Kiszerelés</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    @for( package of packageList; track package.id) {
+      <tr>
+        <td>{{package.id}}</td>
+        <td>{{package.package}}</td>
+        <td>
+          <button type="button" class="btn btn-success"          
+          data-bs-toggle="modal" data-bs-target="#exampleModal"
+          (click)="editPackage(package)">Módosítás</button>
+        </td>
+        <td>
+          <button type="button" class="btn btn-danger"          
+          (click)="deletePackage(package.id)">Törlés</button>
+        </td>
+
+      </tr>
+    }
+  </tbody>
+</table>

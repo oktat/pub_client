@@ -1,0 +1,83 @@
+<h1>Típusok</h1>
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Hozzáadás
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          @if(addMode) {
+            Új típus
+          }@else {
+            Módosítás
+          }
+        </h1>
+        <button type="button" class="btn-close" 
+        data-bs-dismiss="modal" aria-label="Close"
+        (click)="closeButton()"></button>
+      </div>
+      <div class="modal-body">
+
+
+        <form [formGroup]="typeForm" (ngSubmit)="saveType()" id="typeForm">
+          <div class="input">
+            <label for="id">Id</label>
+            <input type="text" class="form-control" formControlName="id"
+              readonly>
+          </div>
+          <div class="input">
+            <label for="type">Típus</label>
+            <input type="text" class="form-control" formControlName="type">
+          </div>
+
+        </form>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" 
+        data-bs-dismiss="modal"(click)="closeButton()">Bezárás</button>
+        <button type="submit" class="btn btn-primary"
+        form="typeForm" data-bs-dismiss="modal">Mentés</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Típus</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    @for( type of typeList; track type.id) {
+      <tr>
+        <td>{{type.id}}</td>
+        <td>{{type.type}}</td>
+        <td>
+          <button type="button" class="btn btn-success"          
+          data-bs-toggle="modal" data-bs-target="#exampleModal"
+          (click)="editType(type)">Módosítás</button>
+        </td>
+        <td>
+          <button type="button" class="btn btn-danger"          
+          (click)="deleteType(type.id)">Törlés</button>
+        </td>
+
+      </tr>
+    }
+  </tbody>
+</table>

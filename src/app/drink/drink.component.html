@@ -1,0 +1,109 @@
+<p>Italok</p>
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Hozzáad
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          @if(addMode) {
+            Új ital
+          }@else {
+            Módosítás
+          }
+          
+        </h1>
+        <button type="button" class="btn-close" 
+        data-bs-dismiss="modal" aria-label="Close"
+        (click)="closeButton()"></button>
+      </div>
+      <div class="modal-body">
+        
+
+        <form [formGroup]="drinkForm" (ngSubmit)="saveDrink()">
+          <div class="input">
+            <label for="drink">ID</label>
+            <input type="text" class="form-control" formControlName="id"
+              readonly>
+          </div>
+
+          <div class="input">
+            <label for="drink">Ital neve</label>
+            <input type="text" class="form-control" formControlName="drink">
+          </div>
+          <div class="input">
+            <label for="amount">Mennyiség</label>
+            <input type="text" class="form-control" formControlName="amount">
+          </div>
+
+          <label for="type">Típus</label>
+          <select formControlName="type" class="form-select mt-3">
+            @for(type of typeList; track type.id) {
+              <option value="{{type.type}}">{{type.type}}</option>
+            }
+          </select>
+
+          <label for="package">Kiszerelés</label>
+          <select formControlName="package" class="form-select mt-3">
+            @for(package of packageList; track package.id) {
+              <option value="{{package.package}}">{{package.package}}</option>
+            }
+          </select>
+
+          <button type="submit" class="btn btn-primary mt-3"
+          data-bs-dismiss="modal">Mentés</button>
+
+        </form>
+
+
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Ital</th>
+      <th>Típus</th>
+      <th>Kiszerelés</th>
+      <th>Mennyiség</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    @for( drink of drinkList; track drink.id) {
+
+      <tr>
+        <td>{{drink.drink}}</td>
+        <td>{{drink.type}}</td>
+        <td>{{drink.package}}</td>
+        <td>{{drink.amount}}</td>
+        <td>
+          <button type="button" class="btn btn-success"
+          data-bs-toggle="modal" data-bs-target="#exampleModal"
+          (click)="editDrink(drink)">Módosítás</button>
+        </td>
+        <td>
+          <button type="button" class="btn btn-danger"
+          (click)="deleteDrink(drink.id)">Törlés</button>
+        </td>
+      </tr>
+  
+    }      
+  </tbody>
+</table>
+
+
+  
+  
+

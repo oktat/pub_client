@@ -1,0 +1,107 @@
+<h1>Felhasználók kezelése</h1>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Hozzáadás
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          @if(addMode) {
+            Új felhasználó
+          }@else {
+            Módosítás
+          }
+        
+        </h1>
+        <button type="button" class="btn-close" 
+        data-bs-dismiss="modal" aria-label="Close"
+        (click)="back()"
+        ></button>
+      </div>
+      <div class="modal-body">
+
+        <form [formGroup]="userForm" (ngSubmit)="saveUser()" id="userForm">
+
+          <div class="input">
+            <label for="name">Név</label>
+            <input type="text" class="form-control" formControlName="name">
+          </div>
+          <div class="input">
+            <label for="email">E-mail</label>
+            <input type="text" class="form-control" formControlName="email">
+          </div>
+          <div class="input">
+            <label for="city">Település</label>
+            <select formControlName="city" class="form-select mt-3">
+              @for(city of cityList; track city.id) {
+                <option value="{{city.city}}">{{city.city}}</option>
+              }
+            </select>
+          </div>
+
+          @if(addMode) {
+
+          <div class="input">
+            <label for="password">Jelszó</label>
+            <input type="text" class="form-control" formControlName="password">
+          </div>
+          <div class="input">
+            <label for="confirm_password">Jelszó újra</label>
+            <input type="text" class="form-control" formControlName="confirm_password">
+          </div>
+
+          }
+
+        </form>
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+        (click)="back()">Mégse</button>
+        <button type="submit" class="btn btn-primary"
+        form="userForm" data-bs-dismiss="modal"
+        >Mentés</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Név</th>
+      <th>E-mail</th>
+      <th>Település</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    @for( user of userList; track user.id) {
+      <tr>
+        <td>{{user.id}}</td>
+        <td>{{user.name}}</td>
+        <td>{{user.email}}</td>
+        <td>{{getCityName(user.city_id)}}</td>
+        <td>
+          <button type="button" class="btn btn-success"
+          data-bs-toggle="modal" data-bs-target="#exampleModal"
+          (click)="editUser(user)">Módosítás</button>
+        </td>
+        <td>
+          <button type="button" class="btn btn-danger"
+          (click)="deleteUser(user.id)">Törlés</button>
+        </td>
+
+      </tr>
+    }
+  </tbody>
+</table>

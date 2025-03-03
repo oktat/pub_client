@@ -1,0 +1,31 @@
+<h1>Admin beállítások</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Név</th>
+      <th>E-mail</th>
+      <th>Település</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    @for( user of userList; track user.id) {
+      <tr>
+        <td>{{user.id}}</td>
+        <td>{{user.name}}</td>
+        <td>
+          <input type="text" [(ngModel)]="user.admin" class="form-control">
+        </td>
+        
+        <td>
+          <button type="button" class="btn btn-success"
+          (click)="setAdmin(user)">Beállítás</button>
+        </td>
+
+      </tr>
+    }
+  </tbody>
+</table>
